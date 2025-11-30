@@ -1,193 +1,111 @@
-Parallel File Sorter - Dokumentace Projektu
-Název projektu:	Parallel File Sorter
-Autor:	[Vaše Jméno]
-Datum:	23.11.2025
-Škola:	[Název vaší školy]
-Předmět:	Paralelní programování
-Typ projektu:	Školní projekt (Vzdělávací software)
-📋 Obsah
+# ParFile Pipeline - Automated File Organizer
 
-    Specifikace požadavků
+A multi-threaded Python application that automatically monitors, sorts, and organizes files by their extensions into categorized folders. Built with a user-friendly GUI and real-time logging capabilities.
 
-    Architektura aplikace
+## Features
 
-    Popis běhu (Behaviorální model)
+- **Automatic File Monitoring**: Continuously watches a selected folder for new files
+- **Smart Organization**: Sorts files by extension (JPG, PNG, PDF, MP4, etc.) into dedicated folders
+- **Multi-threaded Processing**: Parallel file handling with 4 loader and 4 mover threads for optimal performance
+- **User-Friendly GUI**: Easy folder selection interface with status indicators
+- **Real-time Logging**: Complete activity log with timestamps for all file operations
+- **Duplicate Handling**: Automatically renames files with duplicate names
+- **Cross-platform Support**: Works on Windows, macOS, and Linux
 
-    Rozhraní a závislosti
+## Installation & Usage
 
-    Instalace a spuštění
+### Running the Application
 
-    Konfigurace
+1. **Navigate to the `dist` folder**:
 
-    Právní a licenční aspekty
+2. **Run the application**:
+- **Windows**: Double-click `main.exe`
+- **Linux/Mac**: 
+  ```
+  ./main
+  ```
 
-    Chybové stavy
+3. **Select folders**:
+- **Unsorted folder**: Choose the folder to monitor for new files
+- **Folder to sort in**: Choose the destination folder where organized files will be placed
 
-    Testování a validace
+4. **Click "Submit"** to start the automated file organization
 
-    Verze a známé chyby
+5. **Optional actions**:
+- **Read logs**: View detailed operation history
+- **Stop Pipeline**: Safely terminate the application
 
-1. Specifikace požadavků
-Cíl projektu
+## How It Works
 
-Vytvořit aplikaci pro automatické třídění souborů v reálném čase s využitím paralelního zpracování, která demonstruje řešení problému Producer-Consumer.
-Business Requirements (BR)
 
-    BR1: Aplikace musí ušetřit čas uživatele automatizací organizace souborů.
+1. **Watcher**: Monitors the unsorted folder for new files
+2. **Loader**: Identifies file extensions and creates category folders
+3. **Mover**: Physically moves files to their designated folders
+4. **Logger**: Records all operations with timestamps
 
-    BR2: Aplikace musí být schopna zpracovat velký nápor dat bez zamrznutí.
+## File Organization Example
 
-Functional Requirements (FR)
+**Before:**
+Unsorted/
+├── photo.jpg
+├── document.pdf
+├── video.mp4
+└── report.docx
 
-    FR1 (Monitoring): Aplikace nepřetržitě sleduje vstupní složku trash.
 
-    FR2 (Detekce): Identifikuje nové soubory a ignoruje již zpracované.
+**After:**
+MySorted/
+├── JPG/
+│ └── photo.jpg
+├── PDF/
+│ └── document.pdf
+├── MP4/
+│ └── video.mp4
+└── DOCX/
+└── report.docx
 
-    FR3 (Třídění): Automaticky vytváří složky podle přípony souboru (např. sorted_JPG).
 
-    FR4 (Paralelismus): Procesy detekce, analýzy a přesunu běží souběžně.
+Click the **"Read logs"** button in the GUI to view the log file.
 
-Non-Functional Requirements (NFR)
+## Error Handling
 
-    NFR1: Využití jazyka Python a knihovny threading.
+- **Permission Errors**: If a file is locked by another program, the error is logged and processing continues
+- **Duplicate Names**: Files with identical names are automatically renamed with a counter (e.g., `photo_1.jpg`)
+- **Missing Extensions**: Files without extensions are placed in an `UNKNOWN` folder
 
-    NFR2: Bezpečné předávání dat mezi vlákny (Thread-safety).
+## Performance
 
-    NFR3: Robustnost vůči I/O chybám (např. smazání souboru během procesu).
+- **Multi-threaded**: 4 parallel loader threads and 4 mover threads
+- **Non-blocking GUI**: Interface remains responsive during processing
+- **Efficient monitoring**: 1-second polling interval to balance responsiveness and CPU usage
 
-2. Architektura aplikace
+## Troubleshooting
 
-Aplikace využívá návrhový vzor Pipeline se třemi fázemi zpracování.
-Komponenty ("Big Picture")
+**Application won't start:**
+- Ensure you're running `main.exe` from the `dist/` folder
+- Check antivirus isn't blocking the executable
 
-    Watcher (Producent):
+**Files not moving:**
+- Verify both folders are selected and paths are correct
+- Check file permissions in source and destination folders
 
-        Odpovědnost: I/O operace (skenování disku).
+**High CPU usage:**
+- This is normal during active file processing
+- CPU usage drops when no new files are detected
 
-        Výstup: Cesty k souborům -> Queue 1.
+## Contributing
 
-    Loader (Processor):
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
 
-        Odpovědnost: Logika (parsování přípony, tvorba složek).
+## License
 
-        Vstup: Queue 1 -> Výstup: Příkaz k přesunu -> Queue 2.
+This project is open-source and available for personal and commercial use.
 
-        Běží ve 4 instancích.
+## Author
 
-    Mover (Konzument):
+- Developed by Maxim Mazuret
+- https://github.com/cortaget
 
-        Odpovědnost: I/O operace (fyzický přesun dat).
+---
 
-        Vstup: Queue 2.
-
-        Běží ve 4 instancích.
-
-Schéma vazeb
-
-text
-[File System] --> (Watcher) --[Queue 1]--> (Loaders x4) --[Queue 2]--> (Movers x4) --> [File System]
-
-3. Popis běhu (Behaviorální model)
-
-Typický životní cyklus zpracování jednoho souboru (Use Case):
-UML Diagram aktivit pro zpracování souboru (Activity Diagram)
-UML Diagram aktivit pro zpracování souboru (Activity Diagram)
-
-    Start: Uživatel nahraje soubor do složky.
-
-    Detekce: Watcher jej najde, ověří v cache seen_files a pošle do fronty.
-
-    Analýza: Loader si soubor vyzvedne. Zjistí typ .pdf.
-
-    Příprava: Loader ověří existenci složky sorted_PDF. Pokud není, vytvoří ji (atomicky).
-
-    Přesun: Mover obdrží příkaz a přesune soubor.
-
-    Konec: Soubor je na novém místě.
-
-4. Rozhraní a závislosti
-Závislosti (Third-party libraries)
-
-Projekt je navržen s minimálními závislostmi pro snadnou přenositelnost.
-
-    Python Standard Library:
-
-        threading: Správa paralelních vláken.
-
-        queue: Synchronizovaná fronta (Thread-safe FIFO).
-
-        os, shutil: Manipulace se souborovým systémem.
-
-        time: Řízení cyklů.
-
-Hardwarové požadavky
-
-    OS: Windows 10/11, Linux, macOS.
-
-    CPU: Vícejádrový procesor doporučen pro efektivní I/O operace.
-
-    RAM: Minimální nároky (~50 MB).
-
-5. Instalace a spuštění
-Instalace
-
-Aplikace nevyžaduje instalaci. Je distribuována jako "portable" skript.
-Spuštění
-
-    Ujistěte se, že máte nainstalován Python 3.8+.
-
-    Stáhněte zdrojový kód projektu.
-
-    V terminálu přejděte do složky projektu.
-
-    Spusťte příkaz:
-
-    bash
-    python main.py
-
-    Aplikace automaticky vytvoří složky trash (vstup) a sorted (výstup).
-
-6. Konfigurace
-
-Konfigurace je definována přímo v souboru main.py (Hard-coded configuration pro zjednodušení školního projektu).
-
-Možnosti úprav (v kódu):
-
-    num_loaders = 4: Počet vláken pro analýzu souborů. Zvyšte pro systémy s rychlým CPU.
-
-    num_movers = 4: Počet vláken pro přesun. Zvyšte pro systémy s rychlým SSD.
-
-    time.sleep(1) ve Watcheru: Interval skenování složky (v sekundách).
-
-7. Právní a licenční aspekty
-
-    Licence: MIT License (Open Source).
-
-    Autorská práva: Kód je duševním vlastnictvím autora uvedeného v hlavičce.
-
-    Prohlášení: Tento software je školní projekt. Autor nenese odpovědnost za případnou ztrátu dat při nesprávném použití aplikace na citlivých souborech.
-
-8. Chybové stavy
-Kód chyby / Výjimka	Příčina	Chování aplikace
-FileNotFoundError	Soubor byl smazán uživatelem před zpracováním.	Zalagováno do konzole, vlákno pokračuje dál.
-PermissionError	Aplikace nemá práva k zápisu.	Vypsána chyba, soubor je přeskočen.
-FileExistsError	Cílový soubor již existuje.	Operační systém může vyvolat chybu, soubor zůstane ve vstupní složce.
-9. Testování a validace
-
-Aplikace byla validována pomocí integračních testů.
-
-Testovací scénář TC-01 (Souběžnost):
-
-    Akce: Vložení 50 souborů najednou.
-
-    Výsledek: Všechna vlákna (Loaders/Movers) se aktivovala. Soubory byly roztříděny do 2 sekund. Žádný soubor se neztratil.
-
-    Status: ✅ Úspěch
-
-Testovací scénář TC-02 (Duplicita):
-
-    Akce: Watcher běží 10 minut se stejnými soubory ve složce.
-
-    Výsledek: Soubory byly přidány do fronty pouze jednou (díky seen_files). Paměť nerostla.
-
-    Status: ✅ Úspěch
+**Happy organizing! 📁✨**
