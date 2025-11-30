@@ -1,0 +1,6 @@
+[2025-11-30 17:38:04] [INFO] Log message: Moved file 'E:\python\PYCHARM\ParFile Pipeline\trash\images.jpg' to 'E:/python/PYCHARM/ParFile Pipeline/sorted\JPG'
+[2025-11-30 17:38:04] [INFO] Log message: Moved file 'E:\python\PYCHARM\ParFile Pipeline\trash\nBkSUhL2hFAkkMa_Jb6BvMKnxdDs9pC9yyqYy7jLs2KQeXqLBmmcmzZh59JUtRPBsdaJqSfJd54qEr7t1mNwKSGK7WY=kfHFyQk8FJfZJ__vVxl7gA.jpg' to 'E:/python/PYCHARM/ParFile Pipeline/sorted\JPG'
+[2025-11-30 17:38:04] [INFO] Log message: Moved file 'E:\python\PYCHARM\ParFile Pipeline\trash\photo_2025-11-23_13-07-55.jpg' to 'E:/python/PYCHARM/ParFile Pipeline/sorted\JPG'
+[2025-11-30 17:38:04] [INFO] Log message: Moved file 'E:\python\PYCHARM\ParFile Pipeline\trash\y2isyx719xgucy8ibqwe4n0ozceejp9x.jpg' to 'E:/python/PYCHARM/ParFile Pipeline/sorted\JPG'
+[2025-11-30 17:38:04] [INFO] Log message: Moved file 'E:\python\PYCHARM\ParFile Pipeline\trash\Новый текстовый документ.txt' to 'E:/python/PYCHARM/ParFile Pipeline/sorted\TXT'
+[2025-11-30 17:39:25] [INFO] Log message: Moved file 'E:\python\PYCHARM\ParFile Pipeline\trash\Новый текстовый документ255.txt' to 'E:/python/PYCHARM/ParFile Pipeline/sorted\TXT'

@@ -9,6 +9,7 @@ class Watcher(threading.Thread):
     """
     def __init__(self, directory_to_watch, queue):
         super().__init__()
+
         # Používáme absolutní cestu pro jistotu
         self.DIRECTORY_TO_WATCH = os.path.abspath(directory_to_watch)
         self.queue = queue

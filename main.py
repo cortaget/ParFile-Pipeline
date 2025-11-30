@@ -5,14 +5,32 @@ from Watcher import Watcher
 from Loader import Loader
 from Mover import Mover
 from Logger import Logger
+from UI import FolderSelector
 import time
 
 if __name__ == '__main__':
     print ("Hello, World!")
 
 
-    files = os.listdir("trash")
-    print(files)
+
+
+    DIRECTORY_TO_WATCH = "trash"
+    DIRECTORY_TO_SORT = "sorted"
+    log_file = "pipeline_log.txt"
+
+    ui = FolderSelector()
+    ui.start()
+    paths = ui.get_paths()
+
+    if paths is None or paths[0] is None or paths[1] is None:
+        print("Пути не были выбраны. Завершение работы.")
+        exit(0)
+
+    DIRECTORY_TO_WATCH, DIRECTORY_TO_SORT = paths
+    print(f"Начинаем мониторинг: {DIRECTORY_TO_WATCH}")
+    print(f"Сортировка в: {DIRECTORY_TO_SORT}")
+
+
 
     """Hlavní skript pro spuštění paralelního zpracování souborů."""
 
@@ -20,9 +38,11 @@ if __name__ == '__main__':
     q_move = queue.Queue()  # Loader -> Mover
     q_log = queue.Queue()  # Mover -> Logger
 
-    DIRECTORY_TO_WATCH = "trash"
-    DIRECTORY_TO_Sort = "sorted"
-    log_file = "pipeline_log.txt"
+
+
+
+
+
 
     # Создаем и запускаем потоки
     watcher = Watcher(DIRECTORY_TO_WATCH, q_files)
@@ -33,7 +53,7 @@ if __name__ == '__main__':
 
     # Можно запустить несколько Loader-ов для скорости!
     for i in range(4):  # Запускаем 4 потока
-        loader = Loader(DIRECTORY_TO_Sort,q_files, q_move, )
+        loader = Loader(DIRECTORY_TO_SORT,q_files, q_move, )
         loader.start()
 
     for i in range(4):
