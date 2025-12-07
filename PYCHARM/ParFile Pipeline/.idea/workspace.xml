@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="824c774c-3d99-4f96-851d-79514f547736" name="Changes" comment="Upgrade and refactoring">
+      <change afterPath="$PROJECT_DIR$/../7Modul_Package_and_code_management/7.5Metoda_main().py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../7Modul_Package_and_code_management/7.7Build-in_moduly_a_funkce_help(..).py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../7Modul_Package_and_code_management/calculator/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../7Modul_Package_and_code_management/calculator/add.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Closure/6.2Funkce_jako_vstup_jiné_funkce.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Closure/6.4Kolekce_plná_funkcí.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Closure/6.5Closure_první_seznámení_a_nonlocal.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Closure/6.6Closure_task_list.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.10Konstruktory __init__ a __new__/main5.10.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.11Metody_pro_konverzi__str__, __int__, __float__/main5.11.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.12Aritmeticke_operátory__add__, __sub__ apod/main5.12.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.13Aritmetické_operátory_měnící_operand__iadd__,__isub__/main5.13.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.14-15Komparační_a_relační_operátory__eg__,__lt__/main5.14.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.16Metody_pro_přetížení_hranatých_závorek_a_len()/DoubleLinkedQueue.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.16Metody_pro_přetížení_hranatých_závorek_a_len()/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.16Metody_pro_přetížení_hranatých_závorek_a_len()/main5.6.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.17Metoda __contains__/DoubleLinkedQueue.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.17Metoda __contains__/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.17Metoda __contains__/main5.6.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.18Iterátor__iter__a__next__/DoubleLinkedQueue.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.18Iterátor__iter__a__next__/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.18Iterátor__iter__a__next__/main5.6.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.19Factory_method_pattern_a_staticka_metoda/main5.19.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.20_Class_(statické)_vlasnosti_a_metody/main5.20.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.22Anotace_pro_gettery_a_settery+Encapsulation_principe/main5.22.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.23Desktruktor__del__a_příkaz_del/main5.23.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.5/DoubleLinkedList.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.5/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.5/main5.5.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.6Fronta_jako_obousměrný_spojový_seznam/DoubleLinkedQueue.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.6Fronta_jako_obousměrný_spojový_seznam/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.6Fronta_jako_obousměrný_spojový_seznam/main5.6.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.7/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.7/Stack.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.7/main5.7.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.8-9/Auto.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Object_oriented_programming/5.8-9/main5.8.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Python_RAG/memory_cli.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Python_RAG/memory_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Python_RAG/voice_assistant.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/core/test_tools.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/core/tool_decorator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/core/tool_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/tools/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/tools/calculator_tool.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/tools/time_tool.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tools_system/voice_assistant.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/auth.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/openapi.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/participant.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/ratings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/reports.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/results.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/rounds.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/submissions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/users.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WA_API/wa.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sorted/JPG/images.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/trash/images.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sorted/JPG/nBkSUhL2hFAkkMa_Jb6BvMKnxdDs9pC9yyqYy7jLs2KQeXqLBmmcmzZh59JUtRPBsdaJqSfJd54qEr7t1mNwKSGK7WY=kfHFyQk8FJfZJ__vVxl7gA.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/trash/nBkSUhL2hFAkkMa_Jb6BvMKnxdDs9pC9yyqYy7jLs2KQeXqLBmmcmzZh59JUtRPBsdaJqSfJd54qEr7t1mNwKSGK7WY=kfHFyQk8FJfZJ__vVxl7gA.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sorted/JPG/photo_2025-11-23_13-07-55.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/trash/photo_2025-11-23_13-07-55.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sorted/JPG/y2isyx719xgucy8ibqwe4n0ozceejp9x.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/trash/y2isyx719xgucy8ibqwe4n0ozceejp9x.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sorted/TXT/Новый текстовый документ.txt" beforeDir="false" afterPath="$PROJECT_DIR$/trash/Новый текстовый документ.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;cortaget&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit&quot;,
+    &quot;accountId&quot;: &quot;32690e93-48f8-4f43-b8f0-db7c4720f35f&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="35sTfCEpn5G19TvspzwwF2KnxnX" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Loader.executor": "Run",
+    "Python.UI.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "<unknown>"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\python\PYCHARM\ParFile Pipeline\trash" />
+      <recent name="E:\python\PYCHARM\ParFile Pipeline" />
+      <recent name="E:\python\PYCHARM\ParFile Pipeline\ParFile-Pipeline\trash" />
+      <recent name="E:\python\PYCHARM\ParFile Pipeline\ParFile-Pipeline" />
+      <recent name="E:\python\PYCHARM\ParFile Pipeline\ParFile-Pipeline\sorted\sorted_TXT" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="ParFile Pipeline" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="E:\python\PYCHARM\ParFile Pipeline\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-884f5ed5d46b-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.22855.92" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="824c774c-3d99-4f96-851d-79514f547736" name="Changes" comment="" />
+      <created>1763897881405</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763897881405</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Upgrade and refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upgrade and refactoring" />
+  </component>
+</project>
