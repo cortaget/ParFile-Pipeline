@@ -1,0 +1,20 @@
+curl -X POST http://127.0.0.1:80/restapi/v1/users -H "Content-Type: application/json" -d "{\"name\": \"Martin\",\"email\":\"pepa@gmail.com\" ,\"role\": \"poradatel\", \"password\": \"123\"}"
+
+curl -X POST http://127.0.0.1:80/restapi/v1/login -H "Content-Type: application/json" -d "{\"name\": \"Martin\",\"password\": \"123\"}"
+
+curl -X POST http://127.0.0.1:80/restapi/v1/submissions -H "Content-Type: application/json" -H "Authorization: Bearer <>" -d "{\"name\":\"Hack\"}"
+
+
+curl -X POST http://127.0.0.1:80/restapi/v1/submissions -H "Content-Type: application/json" -H "Authorization: Bearer <>" -d "{\"name\":\"Hack\",\"user_id\":999}"
+
+curl -X DELETE http://127.0.0.1:80/restapi/v1/submissions/1 -H "Authorization: Bearer <>" -H "Content-Type: application/json" -d "{\"password\":\"123\"}"
+
+
+
+
+
+
+
+curl -X POST http://127.0.0.1:80/restapi/v1/users -H "Content-Type: application/json" -d "{\"name\": \"Maxim\",\"email\":\"pepa@gmail.com\" ,\"role\": \"soutezici\", \"password\": \"1234\"}"
+
+curl -X POST http://127.0.0.1:80/restapi/v1/login -H "Content-Type: application/json" -d "{\"name\": \"Maxim\",\"password\": \"123\"}"

@@ -1,0 +1,1054 @@
+openapi: 3.1.0
+info:
+  title: School Competition System API
+  version: 1.0.0
+  description: REST API for managing school competitions, submissions, participants, and results
+
+servers:
+  - url: http://127.0.0.1:80
+    description: Local development server
+
+tags:
+  - name: Authentication
+    description: User authentication operations
+  - name: Users
+    description: User management operations
+  - name: Submissions
+    description: Competition submission management
+  - name: Rounds
+    description: Competition round management
+  - name: Participants
+    description: Round participant management
+  - name: Ratings
+    description: Submission rating operations
+  - name: Results
+    description: Results calculation and publishing
+  - name: Reports
+    description: Report generation
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from login endpoint
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          example: Validation error
+
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - role
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Martin
+        email:
+          type: string
+          format: email
+          example: martin@example.com
+        role:
+          type: string
+          enum: [soutezici, rozhodci, admin, poradatel]
+          example: soutezici
+          description: User role (soutezici=competitor, rozhodci=judge, poradatel=organizer)
+
+    UserCreate:
+      type: object
+      required:
+        - name
+        - email
+        - role
+        - password
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [soutezici, rozhodci, admin, poradatel]
+        password:
+          type: string
+          minLength: 1
+
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        submissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Submission'
+
+    LoginRequest:
+      type: object
+      required:
+        - name
+        - password
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Logged in
+        token:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+
+    LogoutResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Logged out
+
+    Submission:
+      type: object
+      required:
+        - id
+        - name
+        - user_id
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: My Project
+        user_id:
+          type: integer
+          example: 1
+
+    SubmissionCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+
+    Round:
+      type: object
+      required:
+        - id
+        - name
+        - rules
+        - start_date
+        - end_date
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Round 1
+        rules:
+          type: string
+          example: Competition rules description
+        start_date:
+          type: string
+          format: date
+          example: "2025-10-01"
+        end_date:
+          type: string
+          format: date
+          example: "2025-12-01"
+        published:
+          type: boolean
+          example: false
+
+    RoundCreate:
+      type: object
+      required:
+        - name
+        - rules
+        - start_date
+        - end_date
+      properties:
+        name:
+          type: string
+          minLength: 1
+        rules:
+          type: string
+          minLength: 1
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+
+    Participant:
+      type: object
+      required:
+        - user_id
+        - status
+      properties:
+        user_id:
+          type: integer
+          example: 2
+        status:
+          type: string
+          enum: [active, inactive]
+          example: active
+
+    Rating:
+      type: object
+      required:
+        - points
+        - comment
+        - judge_id
+      properties:
+        points:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 85
+        comment:
+          type: string
+          example: Excellent work
+        judge_id:
+          type: integer
+          example: 3
+
+    RatingCreate:
+      type: object
+      required:
+        - points
+        - comment
+      properties:
+        points:
+          type: integer
+          minimum: 0
+          maximum: 100
+        comment:
+          type: string
+          minLength: 1
+
+    Result:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        score:
+          type: number
+          format: float
+          example: 85.5
+        rank:
+          type: integer
+          minimum: 1
+          example: 1
+
+    PublicResult:
+      type: object
+      properties:
+        round_id:
+          type: integer
+        name:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+
+    Report:
+      type: object
+      properties:
+        round_id:
+          type: integer
+        format:
+          type: string
+        report:
+          type: string
+        message:
+          type: string
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+paths:
+  /restapi/v1/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate user and receive access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              sample:
+                value:
+                  name: Martin
+                  password: "123"
+      responses:
+        '200':
+          description: Successfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Missing name field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Incorrect password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/logout:
+    post:
+      tags:
+        - Authentication
+      summary: User logout
+      description: Logout current user and invalidate token
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully logged out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+        '400':
+          description: Missing or invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/users:
+    post:
+      tags:
+        - Users
+      summary: Register new user
+      description: Create a new user account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+            examples:
+              sample:
+                value:
+                  name: Martin
+                  email: martin@example.com
+                  role: soutezici
+                  password: "123"
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieve list of all registered users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /restapi/v1/me:
+    get:
+      tags:
+        - Users
+      summary: Get current user info
+      description: Retrieve information about the authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: Unauthorized - invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/submissions:
+    post:
+      tags:
+        - Submissions
+      summary: Create submission
+      description: Create a new competition submission (competitors only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionCreate'
+            examples:
+              sample:
+                value:
+                  name: My Project
+      responses:
+        '201':
+          description: Submission created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        '400':
+          description: Missing name field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only competitors can create submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Submissions
+      summary: Get all submissions
+      description: Retrieve list of all submissions
+      responses:
+        '200':
+          description: List of submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Submission'
+
+  /restapi/v1/submissions/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Submission ID
+        schema:
+          type: integer
+
+    put:
+      tags:
+        - Submissions
+      summary: Update submission
+      description: Update your own submission
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionCreate'
+      responses:
+        '200':
+          description: Submission updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        '400':
+          description: No data provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Can only edit own submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Submissions
+      summary: Delete submission
+      description: Delete your own submission
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Submission deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Can only delete own submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/rounds:
+    post:
+      tags:
+        - Rounds
+      summary: Create round
+      description: Create a new competition round (organizers only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoundCreate'
+            examples:
+              sample:
+                value:
+                  name: Round 1
+                  rules: Competition rules
+                  start_date: "2025-10-01"
+                  end_date: "2025-12-01"
+      responses:
+        '201':
+          description: Round created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Round'
+        '400':
+          description: Missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only organizers can create rounds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Rounds
+      summary: Get all rounds
+      description: Retrieve list of all competition rounds
+      responses:
+        '200':
+          description: List of rounds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Round'
+
+  /restapi/v1/rounds/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Round ID
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - Rounds
+      summary: Get round details
+      description: Retrieve details of a specific round
+      responses:
+        '200':
+          description: Round details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Round'
+        '404':
+          description: Round not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - Rounds
+      summary: Update round
+      description: Update competition round (organizers only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoundCreate'
+      responses:
+        '200':
+          description: Round updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Round'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only organizers can update rounds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Round not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Rounds
+      summary: Delete round
+      description: Delete competition round (organizers only)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Round deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only organizers can delete rounds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Round not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/rounds/{round_id}/participants:
+    parameters:
+      - name: round_id
+        in: path
+        required: true
+        description: Round ID
+        schema:
+          type: integer
+
+    post:
+      tags:
+        - Participants
+      summary: Add participant
+      description: Add participant to round (organizers only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Participant'
+            examples:
+              sample:
+                value:
+                  user_id: 2
+                  status: active
+      responses:
+        '201':
+          description: Participant added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+          description: Missing fields or participant already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only organizers can manage participants
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Round not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Participants
+      summary: Get participants
+      description: Retrieve list of round participants
+      responses:
+        '200':
+          description: List of participants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Participant'
+        '404':
+          description: Round not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/submissions/{id}/ratings:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Submission ID
+        schema:
+          type: integer
+
+    post:
+      tags:
+        - Ratings
+      summary: Rate submission
+      description: Add rating to submission (judges only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatingCreate'
+            examples:
+              sample:
+                value:
+                  points: 85
+                  comment: Excellent work
+      responses:
+        '201':
+          description: Rating added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '400':
+          description: Missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only judges can rate submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Ratings
+      summary: Get submission ratings
+      description: Retrieve all ratings for a submission
+      responses:
+        '200':
+          description: List of ratings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+        '404':
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/rounds/{id}/results:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Round ID
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - Results
+      summary: Calculate results
+      description: Calculate and retrieve round results
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Round results calculated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Result'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Round not found or no participants
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/rounds/{id}/publish:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Round ID
+        schema:
+          type: integer
+
+    post:
+      tags:
+        - Results
+      summary: Publish results
+      description: Publish round results (organizers only)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Results published successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: No results calculated yet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only organizers can publish results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /restapi/v1/public/results:
+    get:
+      tags:
+        - Results
+      summary: Get public results
+      description: Retrieve all published round results
+      responses:
+        '200':
+          description: List of published results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicResult'
+
+  /restapi/v1/rounds/{id}/report:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Round ID
+        schema:
+          type: integer
+      - name: format
+        in: query
+        required: false
+        description: Report format (pdf or csv)
+        schema:
+          type: string
+          enum: [pdf, csv]
+          default: pdf
+
+    get:
+      tags:
+        - Reports
+      summary: Generate report
+      description: Generate round report (organizers and admins only)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Report generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Only organizers or admins can generate reports
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Round not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
