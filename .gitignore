@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# PyCharm
+.idea/
+
+# Logs
+*.log
+pipeline_log.txt
+
+# Sorted files (если не нужны в репозитории)
+sorted/
